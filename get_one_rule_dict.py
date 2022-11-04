@@ -45,6 +45,12 @@ def rest_api_call (method, endpoint, data=None, ip=args.ip, user=args.user, pass
         res.raise_for_status()
     except requests.exceptions.HTTPError as e:
         raise e
+    except requests.exceptions.ConnectionError as errc:
+        raise errc
+    except requests.exceptions.Timeout as errt:
+        raise errt
+    except requests.exceptions.RequestException as err:
+        raise err
     if len(res.content) > 0:
         response = res.json()
         return response
